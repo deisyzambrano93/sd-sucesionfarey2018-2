@@ -96,7 +96,7 @@ class thread extends Thread {
     public void run() {
         try {
             System.out.println("sending..... ");
-            output.writeUTF("testing connection"); 
+            output.writeUTF("testing connection");
         } catch (IOException ex) {
             Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -111,7 +111,7 @@ public class Server extends Frame {
     JComboBox combobox;
     JLabel calculate, exit, start;
     JScrollPane scroll, scroll2;
-    String result= "", print = "", resultFinal = "", printFinal = "", resultE = "", printE = "";
+    String result = "", print = "", resultFinal = "", printFinal = "", resultE = "", printE = "";
     static int port = 4000;
     int quantity;
     ArrayList<thread> th = new ArrayList<>();
@@ -286,7 +286,7 @@ public class Server extends Frame {
         result = resultFinal;
         print = printFinal;
         if (c == 0) {
-            printE += "Calculo del servidor\n";
+            printE += "";
         } else {
             printE += "Calculo correspondiente al cliente " + c + "\n";
         }
