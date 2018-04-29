@@ -31,7 +31,7 @@ import javax.swing.event.ListSelectionListener;
 class ReceiveClient extends Frame implements Runnable {
 
     MulticastSocket socket;
-    JLabel exitClient;
+    JLabel exit;
     DatagramPacket packet;
     byte data[] = new byte[100];
     String message;
@@ -60,13 +60,13 @@ class ReceiveClient extends Frame implements Runnable {
         list.setBounds(10, 10, 580, 200);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        exitClient = new JLabel("exit");
-        exitClient.setBounds(720, 15, 64, 64);
-        exitClient.setVisible(true);
-        background.add(exitClient);
-        exitClient.setIcon(exitIcon);
+        exit = new JLabel("exit");
+        exit.setBounds(720, 15, 64, 64);
+        exit.setVisible(true);
+        background.add(exit);
+        exit.setIcon(exitIcon);
 
-        exitClient.addMouseListener(new MouseAdapter() {
+        exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 System.exit(0);
