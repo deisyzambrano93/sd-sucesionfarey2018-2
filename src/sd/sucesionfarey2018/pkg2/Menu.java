@@ -9,13 +9,6 @@ package sd.sucesionfarey2018.pkg2;
  *
  * @author deisy
  */
-public class SdSucesionfarey20182 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Menu m = new Menu();  
-    }
+class Menu {
     
 }
