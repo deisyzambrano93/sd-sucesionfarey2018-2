@@ -40,11 +40,11 @@ public class Menu extends Frame {
                     "Cantidad de clientes", 
                     JOptionPane.QUESTION_MESSAGE
                 );
-                if (cantClients != null) {
+                if (cantClients != null && Integer.parseInt(cantClients) > 0) {
                     setVisible(false);
-                    /*Server s = new Server(Integer.parseInt(name));
+                    ServerSocket s = new ServerSocket(Integer.parseInt(cantClients));
                     Thread t = new Thread(s);
-                    t.start();*/
+                    t.start();
                 }
             }
         });
@@ -59,9 +59,9 @@ public class Menu extends Frame {
             @Override
             public void mousePressed(MouseEvent ma) {
                 setVisible(false);
-                /*receiveC c = new receiveC();
-                Thread h = new Thread(c);
-                h.start();*/
+                ReceiveClient c = new ReceiveClient();
+                Thread th = new Thread(c);
+                th.start();
             }
         });
 
