@@ -35,7 +35,7 @@ class ReceiveClient extends Frame implements Runnable {
     byte data[] = new byte[100];
     String message;
     boolean stop = true;
-    JList list = new JList();
+    JList listServers = new JList();
     ArrayList array = new ArrayList();
     DefaultListModel model = new DefaultListModel();
     ArrayList address = new ArrayList();
@@ -49,7 +49,7 @@ class ReceiveClient extends Frame implements Runnable {
             System.out.println("Error Socket");
         }
 
-        background.add(list);
+        background.add(listServers);
         try {
             IP = InetAddress.getByName("255.255.255.255");
         } catch (UnknownHostException ex) {
@@ -66,10 +66,10 @@ class ReceiveClient extends Frame implements Runnable {
         title.setVisible(true);
         background.add(title);
 
-        list.setVisible(true);
-        list.setBounds(200, 90, 400, 200);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setBackground(Color.LIGHT_GRAY);
+        listServers.setVisible(true);
+        listServers.setBounds(200, 90, 400, 200);
+        listServers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listServers.setBackground(Color.LIGHT_GRAY);
 
         exit = new JLabel("exit");
         exit.setBounds(720, 15, 64, 64);
@@ -110,12 +110,12 @@ class ReceiveClient extends Frame implements Runnable {
                 array.add(separate[1]);
 
             }
-            list.setModel(model);
-            list.addListSelectionListener(new ListSelectionListener() {
+            listServers.setModel(model);
+            listServers.addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
-                    if (e.getSource() == list) {
-                        selected = list.getSelectionMode();
+                    if (e.getSource() == listServers) {
+                        selected = listServers.getSelectionMode();
                         enter = 2;
                     }
                 }
@@ -134,7 +134,7 @@ class ReceiveClient extends Frame implements Runnable {
 
 class Window extends Frame {
 
-    JTextArea textArea, title;
+    JTextArea result, title;
     JScrollPane scroll;
     JLabel exit;
 
@@ -152,13 +152,13 @@ class Window extends Frame {
         title.setVisible(true);
         background.add(title);
 
-        textArea = new JTextArea("Waiting for assignment...");
-        textArea.setFont(new Font("Serif", Font.ITALIC, 12));
-        textArea.setLineWrap(true);
-        textArea.setEditable(false);
-        textArea.setWrapStyleWord(true);
-        textArea.setBackground(Color.WHITE);
-        scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        result = new JTextArea("Waiting for assignment...");
+        result.setFont(new Font("Serif", Font.ITALIC, 12));
+        result.setLineWrap(true);
+        result.setEditable(false);
+        result.setWrapStyleWord(true);
+        result.setBackground(Color.WHITE);
+        scroll = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll.setBounds(200, 90, 400, 200);
         scroll.setVisible(true);
         background.add(scroll);
@@ -219,7 +219,7 @@ public class Client {
                 if (data.length == 4) {
                     System.out.println("arrive-> Start: " + data[0] + " End: " + data[1]);
                     calculate(Integer.parseInt(data[0]), Integer.parseInt(data[1]), data[2], data[3]);
-                    win.textArea.setText(printG);
+                    win.result.setText(printG);
                     output.writeUTF(resultClient + ";" + printClient);
                 } else {
                     System.out.println("arrive: " + aux + " size: " + data.length);
