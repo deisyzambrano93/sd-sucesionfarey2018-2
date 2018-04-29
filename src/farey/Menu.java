@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
  */
 public class Menu extends Frame {
 
-    private JLabel server, client, exit;
+    private final JLabel server;
+    private final JLabel client;
+    private final JLabel exit;
     String cantClients;
     URL serverUrl = this.getClass().getResource("images/server.png");
     ImageIcon serverIcon = new ImageIcon(serverUrl);

@@ -11,11 +11,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -32,6 +30,7 @@ class ReceiveClient extends Frame implements Runnable {
 
     MulticastSocket socket;
     JLabel exit;
+    JTextArea title;
     DatagramPacket packet;
     byte data[] = new byte[100];
     String message;
@@ -56,9 +55,21 @@ class ReceiveClient extends Frame implements Runnable {
         } catch (UnknownHostException ex) {
             System.out.println("Error IP");
         }
+
+        title = new JTextArea();
+        title.setBounds(15, 30, 300, 40);
+        title.setOpaque(false);
+        title.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
+        title.setForeground(Color.BLACK);
+        title.setText("List of Servers: ");
+        title.setEditable(false);
+        title.setVisible(true);
+        background.add(title);
+
         list.setVisible(true);
-        list.setBounds(10, 10, 580, 200);
+        list.setBounds(200, 90, 400, 200);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setBackground(Color.LIGHT_GRAY);
 
         exit = new JLabel("exit");
         exit.setBounds(720, 15, 64, 64);
@@ -123,42 +134,40 @@ class ReceiveClient extends Frame implements Runnable {
 
 class Window extends Frame {
 
-    JTextArea textArea, Tit;
+    JTextArea textArea, title;
     JScrollPane scroll;
     JLabel exit;
 
     public Window() {
 
-        URL backgroundUrl = this.getClass().getResource("images/background.png");
-        ImageIcon backgroundIcon = new ImageIcon(backgroundUrl);
         background.setIcon(backgroundIcon);
 
-        Tit = new JTextArea();
-        Tit.setBounds(10, 10, 300, 40);
-        Tit.setOpaque(false);
-        Tit.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
-        Tit.setSelectedTextColor(Color.CYAN);
-        Tit.setForeground(Color.WHITE);
-        Tit.setText("Calculo Interno");
-        Tit.setEditable(false);
-        Tit.setVisible(true);
-        background.add(Tit);
+        title = new JTextArea();
+        title.setBounds(15, 30, 300, 40);
+        title.setOpaque(false);
+        title.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
+        title.setForeground(Color.BLACK);
+        title.setText("Calculate:");
+        title.setEditable(false);
+        title.setVisible(true);
+        background.add(title);
 
-        textArea = new JTextArea("Calculo Interno");
+        textArea = new JTextArea("Waiting for assignment...");
         textArea.setFont(new Font("Serif", Font.ITALIC, 12));
         textArea.setLineWrap(true);
         textArea.setEditable(false);
         textArea.setWrapStyleWord(true);
+        textArea.setBackground(Color.WHITE);
         scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroll.setBounds(10, 10, 580, 100);
+        scroll.setBounds(200, 90, 400, 200);
         scroll.setVisible(true);
         background.add(scroll);
 
         exit = new JLabel("exit");
-        exit.setBounds(530, 330, 65, 65);
+        exit.setBounds(720, 15, 64, 64);
         exit.setVisible(true);
         background.add(exit);
-        //salir.setIcon(exit);
+        exit.setIcon(exitIcon);
 
         exit.addMouseListener(new MouseAdapter() {
             @Override
