@@ -38,8 +38,8 @@ public class Menu extends Frame {
                 cantClients = "";
                 cantClients = JOptionPane.showInputDialog(
                     server, 
-                    "Ingrese la cantidad de clientes:", 
-                    "Cantidad de clientes", 
+                    "Enter the number of clients:", 
+                    "Number of clients", 
                     JOptionPane.QUESTION_MESSAGE
                 );
                 if (cantClients != null && Integer.parseInt(cantClients) > 0) {
