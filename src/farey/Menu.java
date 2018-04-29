@@ -37,10 +37,10 @@ public class Menu extends Frame {
             public void mousePressed(MouseEvent ma) {
                 cantClients = "";
                 cantClients = JOptionPane.showInputDialog(
-                    server, 
-                    "Enter the number of clients:", 
-                    "Number of clients", 
-                    JOptionPane.QUESTION_MESSAGE
+                        server,
+                        "Enter the number of clients:",
+                        "Number of clients",
+                        JOptionPane.QUESTION_MESSAGE
                 );
                 if (cantClients != null && Integer.parseInt(cantClients) > 0) {
                     setVisible(false);
