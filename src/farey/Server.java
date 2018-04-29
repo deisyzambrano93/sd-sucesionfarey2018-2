@@ -120,15 +120,10 @@ public class Server extends Frame {
         this.setLayout(null);
         this.setVisible(true);
 
-        URL urlN = this.getClass().getResource("images/background.png");
-        ImageIcon iconoN = new ImageIcon(urlN);
-        background.setIcon(iconoN);
+        background.setIcon(backgroundIcon);
 
-        URL urlS = this.getClass().getResource("images/exit.png");
-        ImageIcon iconBoton = new ImageIcon(urlS);
-
-        URL urlC = this.getClass().getResource("images/exit.png");
-        ImageIcon iconBotonC = new ImageIcon(urlC);
+        URL calculateUrl = this.getClass().getResource("images/calculate.png");
+        ImageIcon calculateIcon = new ImageIcon(calculateUrl);
 
         textArea = new JTextArea();
         textArea.setFont(new Font("Serif", Font.ITALIC, 12));
@@ -136,7 +131,7 @@ public class Server extends Frame {
         textArea.setEditable(false);
         textArea.setWrapStyleWord(true);
         scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroll.setBounds(10, 60, 580, 100);
+        scroll.setBounds(25, 70, 300, 250);
         scroll.setVisible(false);
         background.add(scroll);
 
@@ -146,53 +141,52 @@ public class Server extends Frame {
         textArea2.setWrapStyleWord(true);
         textArea2.setEditable(false);
         scroll2 = new JScrollPane(textArea2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroll2.setBounds(10, 220, 580, 100);
+        scroll2.setBounds(400, 70, 300, 250);
         scroll2.setVisible(false);
         background.add(scroll2);
 
         Tit1 = new JTextArea();
-        Tit1.setBounds(10, 10, 300, 40);
+        Tit1.setBounds(25, 20, 300, 40);
         Tit1.setOpaque(false);
         Tit1.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
         Tit1.setSelectedTextColor(Color.CYAN);
-        Tit1.setForeground(Color.WHITE);
-        Tit1.setText("Calculo Interno");
+        Tit1.setForeground(Color.BLACK);
+        Tit1.setText("Assignment");
         Tit1.setEditable(false);
         Tit1.setVisible(false);
         background.add(Tit1);
 
         Tit2 = new JTextArea();
-        Tit2.setBounds(10, 180, 300, 40);
+        Tit2.setBounds(400, 20, 300, 40);
         Tit2.setOpaque(false);
         Tit2.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
         Tit2.setSelectedTextColor(Color.CYAN);
-        Tit2.setForeground(Color.WHITE);
-        Tit2.setText("Resultado Final");
+        Tit2.setForeground(Color.BLACK);
+        Tit2.setText("Result");
         Tit2.setEditable(false);
         Tit2.setVisible(false);
         background.add(Tit2);
 
         End = new JTextArea();
-        End.setBounds(10, 10, 300, 40);
+        End.setBounds(15, 15, 380, 40);
         End.setOpaque(false);
         End.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
-        End.setSelectedTextColor(Color.CYAN);
-        End.setForeground(Color.WHITE);
-        End.setText("Esperando.......");
+        End.setForeground(Color.BLACK);
+        End.setText("Waiting For Clients...");
         End.setEditable(false);
         End.setVisible(true);
         background.add(End);
 
         textfield = new JTextField(new Integer(100));
-        textfield.setBounds(10, 60, 200, 20);
+        textfield.setBounds(15, 180, 200, 20);
         textfield.setVisible(false);
         background.add(textfield);
 
-        calculate = new JLabel("calculate");
-        calculate.setBounds(120, 180, 340, 130);
+        calculate = new JLabel("calcular");
+        calculate.setBounds(625, 120, 96, 128);
         calculate.setVisible(false);
         background.add(calculate);
-        calculate.setIcon(iconBoton);
+        calculate.setIcon(calculateIcon);
 
         calculate.addMouseListener(new MouseAdapter() {
             @Override
@@ -275,7 +269,7 @@ public class Server extends Frame {
         });
 
         exit = new JLabel("Exit");
-        exit.setBounds(530, 330, 65, 65);
+        exit.setBounds(720, 15, 64, 64);
         exit.setVisible(true);
         background.add(exit);
         exit.setIcon(exitIcon);
@@ -346,7 +340,8 @@ class serverSocket implements Runnable {
             s.stop();
 
             System.out.println("termino");
-            m.End.setText("¿ Calcular hasta ?");
+            m.End.setText("Limit Number");
+            m.End.setBounds(15, 140, 380, 40);
             m.textfield.setVisible(true);
             m.calculate.setVisible(true);
             for (int i = 0; i < clients; i++) {
