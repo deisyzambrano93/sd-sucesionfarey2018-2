@@ -120,14 +120,14 @@ public class Server extends Frame {
         this.setLayout(null);
         this.setVisible(true);
 
-        URL urlN = this.getClass().getResource("imagenes/fondo2.jpg");
+        URL urlN = this.getClass().getResource("images/background.png");
         ImageIcon iconoN = new ImageIcon(urlN);
         background.setIcon(iconoN);
 
-        URL urlS = this.getClass().getResource("imagenes/boton-verde.gif");
+        URL urlS = this.getClass().getResource("images/exit.png");
         ImageIcon iconBoton = new ImageIcon(urlS);
 
-        URL urlC = this.getClass().getResource("imagenes/boton-naranja.gif");
+        URL urlC = this.getClass().getResource("images/exit.png");
         ImageIcon iconBotonC = new ImageIcon(urlC);
 
         textArea = new JTextArea();
