@@ -1,10 +1,14 @@
-package sd.sucesionfarey2018.pkg2;
+package farey;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.net.URL;
 import javax.swing.*;
 
+/**
+ *
+ * @author deisy
+ */
 public class Frame extends JFrame {
 
     URL backgroundUrl = this.getClass().getResource("images/background.png");

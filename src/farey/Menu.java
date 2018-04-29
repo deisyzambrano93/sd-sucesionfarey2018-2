@@ -1,4 +1,4 @@
-package sd.sucesionfarey2018.pkg2;
+package farey;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -37,9 +37,9 @@ public class Menu extends Frame {
                 name = JOptionPane.showInputDialog("Cantidad de clientes: ", "1");
                 if (name != null) {
                     setVisible(false);
-                    Server s = new Server(Integer.parseInt(name));
+                    /*Server s = new Server(Integer.parseInt(name));
                     Thread t = new Thread(s);
-                    t.start();
+                    t.start();*/
                 }
             }
         });
@@ -54,9 +54,9 @@ public class Menu extends Frame {
             @Override
             public void mousePressed(MouseEvent ma) {
                 setVisible(false);
-                receiveC c = new receiveC();
+                /*receiveC c = new receiveC();
                 Thread h = new Thread(c);
-                h.start();
+                h.start();*/
             }
         });
 
@@ -69,7 +69,6 @@ public class Menu extends Frame {
             @Override
             public void mousePressed(MouseEvent evt) {
                 System.exit(0);
-
             }
         });
 
