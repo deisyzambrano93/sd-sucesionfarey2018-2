@@ -7,7 +7,7 @@ import javax.swing.*;
 
 /**
  *
- * @author deisy
+ * @author Deisy Zambrano
  */
 public class Frame extends JFrame {
 
@@ -19,7 +19,7 @@ public class Frame extends JFrame {
 
     public Frame() {
         Dimension SizeWindows = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setBounds(SizeWindows.width / 3, SizeWindows.height / 10, 600, 400);
+        this.setBounds(SizeWindows.width / 3, SizeWindows.height / 10, 800, 400);
         this.add(background);
         background.setIcon(backgroundIcon);
         this.setVisible(true);

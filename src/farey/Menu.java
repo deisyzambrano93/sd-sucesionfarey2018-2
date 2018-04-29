@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author deisy
+ * @author Deisy Zambrano
  */
 public class Menu extends Frame {
 
     private JLabel server, client, exit;
-    String name;
+    String cantClients;
     URL serverUrl = this.getClass().getResource("images/server.png");
     ImageIcon serverIcon = new ImageIcon(serverUrl);
     URL clientUrl = this.getClass().getResource("images/client.png");
@@ -25,7 +25,7 @@ public class Menu extends Frame {
         this.setVisible(true);
 
         server = new JLabel("server");
-        server.setBounds(120, 60, 340, 130);
+        server.setBounds(75, 120, 96, 128);
         server.setVisible(true);
         background.add(server);
         server.setIcon(serverIcon);
@@ -33,9 +33,14 @@ public class Menu extends Frame {
         server.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent ma) {
-                name = "";
-                name = JOptionPane.showInputDialog("Cantidad de clientes: ", "1");
-                if (name != null) {
+                cantClients = "";
+                cantClients = JOptionPane.showInputDialog(
+                    server, 
+                    "Ingrese la cantidad de clientes:", 
+                    "Cantidad de clientes", 
+                    JOptionPane.QUESTION_MESSAGE
+                );
+                if (cantClients != null) {
                     setVisible(false);
                     /*Server s = new Server(Integer.parseInt(name));
                     Thread t = new Thread(s);
@@ -45,7 +50,7 @@ public class Menu extends Frame {
         });
 
         client = new JLabel("client");
-        client.setBounds(120, 200, 340, 130);
+        client.setBounds(625, 120, 96, 128);
         client.setVisible(true);
         background.add(client);
         client.setIcon(clientIcon);
@@ -61,7 +66,7 @@ public class Menu extends Frame {
         });
 
         exit = new JLabel("exit");
-        exit.setBounds(530, 330, 65, 65);
+        exit.setBounds(720, 15, 64, 64);
         background.add(exit);
         exit.setIcon(exitIcon);
 

@@ -2,7 +2,7 @@ package farey;
 
 /**
  *
- * @author deisy
+ * @author Deisy Zambrano
  */
 public class Main {
 
