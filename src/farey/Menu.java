@@ -42,7 +42,7 @@ public class Menu extends Frame {
                 );
                 if (cantClients != null && Integer.parseInt(cantClients) > 0) {
                     setVisible(false);
-                    ServerSocket s = new ServerSocket(Integer.parseInt(cantClients));
+                    serverSocket s = new serverSocket(Integer.parseInt(cantClients));
                     Thread t = new Thread(s);
                     t.start();
                 }
