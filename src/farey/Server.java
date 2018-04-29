@@ -106,11 +106,11 @@ class thread extends Thread {
 
 public class Server extends Frame {
 
-    JTextField textfield, textfieldC;
-    JTextArea textArea, textArea2, ClientD, End, Tit1, Tit2;
+    JTextField inputNumber, textfieldC;
+    JTextArea assignmentArea, resultArea, ClientD, infoClients, assignmentTitle, resultTitle;
     JComboBox combobox;
     JLabel calculate, exit, start;
-    JScrollPane scroll, scroll2;
+    JScrollPane assignmentScroll, resultScroll;
     String result = "", print = "", resultFinal = "", printFinal = "", resultE = "", printE = "";
     static int port = 4000;
     int quantity;
@@ -125,62 +125,62 @@ public class Server extends Frame {
         URL calculateUrl = this.getClass().getResource("images/calculate.png");
         ImageIcon calculateIcon = new ImageIcon(calculateUrl);
 
-        textArea = new JTextArea();
-        textArea.setFont(new Font("Serif", Font.ITALIC, 12));
-        textArea.setLineWrap(true);
-        textArea.setEditable(false);
-        textArea.setWrapStyleWord(true);
-        scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroll.setBounds(25, 70, 300, 250);
-        scroll.setVisible(false);
-        background.add(scroll);
+        assignmentArea = new JTextArea();
+        assignmentArea.setFont(new Font("Serif", Font.ITALIC, 12));
+        assignmentArea.setLineWrap(true);
+        assignmentArea.setEditable(false);
+        assignmentArea.setWrapStyleWord(true);
+        assignmentScroll = new JScrollPane(assignmentArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        assignmentScroll.setBounds(25, 70, 300, 250);
+        assignmentScroll.setVisible(false);
+        background.add(assignmentScroll);
 
-        textArea2 = new JTextArea();
-        textArea2.setFont(new Font("Serif", Font.ITALIC, 12));
-        textArea2.setLineWrap(true);
-        textArea2.setWrapStyleWord(true);
-        textArea2.setEditable(false);
-        scroll2 = new JScrollPane(textArea2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroll2.setBounds(400, 70, 300, 250);
-        scroll2.setVisible(false);
-        background.add(scroll2);
+        resultArea = new JTextArea();
+        resultArea.setFont(new Font("Serif", Font.ITALIC, 12));
+        resultArea.setLineWrap(true);
+        resultArea.setWrapStyleWord(true);
+        resultArea.setEditable(false);
+        resultScroll = new JScrollPane(resultArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        resultScroll.setBounds(400, 70, 300, 250);
+        resultScroll.setVisible(false);
+        background.add(resultScroll);
 
-        Tit1 = new JTextArea();
-        Tit1.setBounds(25, 20, 300, 40);
-        Tit1.setOpaque(false);
-        Tit1.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
-        Tit1.setSelectedTextColor(Color.CYAN);
-        Tit1.setForeground(Color.BLACK);
-        Tit1.setText("Assignment");
-        Tit1.setEditable(false);
-        Tit1.setVisible(false);
-        background.add(Tit1);
+        assignmentTitle = new JTextArea();
+        assignmentTitle.setBounds(25, 20, 300, 40);
+        assignmentTitle.setOpaque(false);
+        assignmentTitle.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
+        assignmentTitle.setSelectedTextColor(Color.CYAN);
+        assignmentTitle.setForeground(Color.BLACK);
+        assignmentTitle.setText("Assignment");
+        assignmentTitle.setEditable(false);
+        assignmentTitle.setVisible(false);
+        background.add(assignmentTitle);
 
-        Tit2 = new JTextArea();
-        Tit2.setBounds(400, 20, 300, 40);
-        Tit2.setOpaque(false);
-        Tit2.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
-        Tit2.setSelectedTextColor(Color.CYAN);
-        Tit2.setForeground(Color.BLACK);
-        Tit2.setText("Result");
-        Tit2.setEditable(false);
-        Tit2.setVisible(false);
-        background.add(Tit2);
+        resultTitle = new JTextArea();
+        resultTitle.setBounds(400, 20, 300, 40);
+        resultTitle.setOpaque(false);
+        resultTitle.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
+        resultTitle.setSelectedTextColor(Color.CYAN);
+        resultTitle.setForeground(Color.BLACK);
+        resultTitle.setText("Result");
+        resultTitle.setEditable(false);
+        resultTitle.setVisible(false);
+        background.add(resultTitle);
 
-        End = new JTextArea();
-        End.setBounds(15, 15, 380, 40);
-        End.setOpaque(false);
-        End.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
-        End.setForeground(Color.BLACK);
-        End.setText("Waiting For Clients...");
-        End.setEditable(false);
-        End.setVisible(true);
-        background.add(End);
+        infoClients = new JTextArea();
+        infoClients.setBounds(15, 15, 380, 40);
+        infoClients.setOpaque(false);
+        infoClients.setFont(new Font("Serif", Font.PLAIN + Font.BOLD, 30));
+        infoClients.setForeground(Color.BLACK);
+        infoClients.setText("Waiting For Clients...");
+        infoClients.setEditable(false);
+        infoClients.setVisible(true);
+        background.add(infoClients);
 
-        textfield = new JTextField(new Integer(100));
-        textfield.setBounds(15, 180, 200, 20);
-        textfield.setVisible(false);
-        background.add(textfield);
+        inputNumber = new JTextField(new Integer(100));
+        inputNumber.setBounds(15, 180, 200, 20);
+        inputNumber.setVisible(false);
+        background.add(inputNumber);
 
         calculate = new JLabel("calcular");
         calculate.setBounds(625, 120, 96, 128);
@@ -191,80 +191,84 @@ public class Server extends Frame {
         calculate.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                Integer valor = Integer.parseInt(textfield.getText());
-                Tit1.setVisible(true);
-                Tit2.setVisible(true);
-                scroll.setVisible(true);
-                scroll2.setVisible(true);
-                End.setVisible(false);
-                textfield.setVisible(false);
-                calculate.setVisible(false);
 
-                ArrayList<Integer> valores = new ArrayList<>();
+                if ((inputNumber.getText() != null) && (Integer.parseInt(inputNumber.getText()) > 0)) {
+                    Integer value = Integer.parseInt(inputNumber.getText());
 
-                int calc = quantity + 1;
-                int porc = valor / calc;
-                System.out.println(porc);
-                if (valor % calc != 0) {
-                    System.out.println("sobra " + valor % calc);
-                    valores.add(valor % calc + porc);
-                    for (int i = 1; i < quantity + 1; i++) {
-                        valores.add(valores.get(i - 1) + porc);
+                    assignmentTitle.setVisible(true);
+                    resultTitle.setVisible(true);
+                    assignmentScroll.setVisible(true);
+                    resultScroll.setVisible(true);
+                    infoClients.setVisible(false);
+                    inputNumber.setVisible(false);
+                    calculate.setVisible(false);
+
+                    ArrayList<Integer> results = new ArrayList<>();
+
+                    int calc = quantity + 1;
+                    int porc = value / calc;
+                    System.out.println(porc);
+                    if (value % calc != 0) {
+                        System.out.println("excess " + value % calc);
+                        results.add(value % calc + porc);
+                        for (int i = 1; i < quantity + 1; i++) {
+                            results.add(results.get(i - 1) + porc);
+                        }
+                    } else {
+                        results.add(porc);
+                        for (int i = 1; i < quantity + 1; i++) {
+                            results.add(results.get(i - 1) + porc);
+                        }
                     }
-                } else {
-                    valores.add(porc);
-                    for (int i = 1; i < quantity + 1; i++) {
-                        valores.add(valores.get(i - 1) + porc);
+                    porc = porc / 2;
+                    //50
+                    //25
+                    //1-50 +25
+                    //51-100
+                    for (int i = quantity - 1; i >= 0; i--) {
+                        results.set(i, results.get(i) + porc);
+                        System.out.println("Results " + i + ": " + results.get(i));
                     }
-                }
-                porc = porc / 2;
-                //50
-                //25
-                //1-50 +25
-                //51-100
-                for (int i = quantity - 1; i >= 0; i--) {
-                    valores.set(i, valores.get(i) + porc);
-                    System.out.println("Valores " + i + ": " + valores.get(i));
-                }
 
-                /*
+                    /*
                 //para mirar los puntos de partida de cada parte
                 for (int i = 0; i < cant+1; i++) {
                     System.out.println(valores.get(i));
                     
                 }
-                 */
-                calcular(1, valores.get(0), 0);
-                System.out.println("Servidor le toca iniciar en  1 y terminar en " + valores.get(0));
-                textArea.setText(printE);
-                resultFinal = result;
-                printFinal = print;
+                     */
+                    calculate(1, results.get(0), 0);
+                    System.out.println("Server start in 1 and finish in " + results.get(0));
+                    assignmentArea.setText(printE);
+                    resultFinal = result;
+                    printFinal = print;
 
-                for (int i = 1; i < quantity + 1; i++) {
-                    //calcular(valores.get(i-1)+1,valores.get(i),RFinal);
-                    try {
-                        System.out.println("Pc " + i + " le toca iniciar en  " + (valores.get(i - 1) + 1) + " y terminar en " + valores.get(i));
-                        if (th.get(i - 1) == null) {
-                            System.out.println("hilo perdido");
+                    for (int i = 1; i < quantity + 1; i++) {
+                        //calcular(valores.get(i-1)+1,valores.get(i),RFinal);
+                        try {
+                            System.out.println("Client " + i + " , start in  " + (results.get(i - 1) + 1) + " and finish in " + results.get(i));
+                            if (th.get(i - 1) == null) {
+                                System.out.println("Thread not found");
+                            }
+                            th.get(i - 1).output.writeUTF((results.get(i - 1) + 1) + ";" + results.get(i) + ";" + resultFinal + ";" + printFinal);
+                            String aux = "";
+                            while ("".equals(aux)) {
+                                aux = th.get(i - 1).input.readUTF();
+                                String[] data;
+                                data = aux.split(";");
+                                System.out.println("Responded the client " + i);
+                                resultFinal = data[0];
+                                printFinal = data[1];
+                            }
+                        } catch (IOException ex) {
+                            System.out.println("Client " + i + " does not respond");
+                            JOptionPane.showMessageDialog(null, "Client " + i + " does not respond, the server will do the calculation");
+                            calculate(results.get(i - 1) + 1, results.get(i), i);
+                            assignmentArea.setText(resultE);
                         }
-                        th.get(i - 1).output.writeUTF((valores.get(i - 1) + 1) + ";" + valores.get(i) + ";" + resultFinal + ";" + printFinal);
-                        String aux = "";
-                        while ("".equals(aux)) {
-                            aux = th.get(i - 1).input.readUTF();
-                            String[] data;
-                            data = aux.split(";");
-                            System.out.println("Respondio la Pc " + i);
-                            resultFinal = data[0];
-                            printFinal = data[1];
-                        }
-                    } catch (IOException ex) {
-                        System.out.println("Cliente " + i + " no responde");
-                        JOptionPane.showMessageDialog(null, "Cliente " + i + " no responde se hara el calculo del mismo");
-                        calcular(valores.get(i - 1) + 1, valores.get(i), i);
-                        textArea.setText(resultE);
                     }
+                    resultArea.setText(printFinal);
                 }
-                textArea2.setText(printFinal);
             }
         });
 
@@ -282,15 +286,15 @@ public class Server extends Frame {
         });
     }
 
-    void calcular(int inicio, int fin, int c) {
+    void calculate(int start, int end, int c) {
         result = resultFinal;
         print = printFinal;
         if (c == 0) {
             printE += "";
         } else {
-            printE += "Calculo correspondiente al cliente " + c + "\n";
+            printE += "Calculate of the client " + c + "\n";
         }
-        for (int i = inicio; i <= fin; i++) {
+        for (int i = start; i <= end; i++) {
             if (!result.contains("" + i)) {
                 result += i;
                 if (i % 10 == 0) {
@@ -315,37 +319,37 @@ class serverSocket implements Runnable {
         this.clients = clients;
     }
 
-    Server m = new Server();
+    Server server = new Server();
 
     @Override
     public void run() {
-        m.quantity = clients;
+        server.quantity = clients;
         try {
             ServerSocket serverSocket;
             @SuppressWarnings("UnusedAssignment")
             Socket client = null;
 
-            serverSocket = new ServerSocket(m.port);
-            System.out.println("servidor listo");
-            System.out.println("Esperando " + clients + " clientes....");
+            serverSocket = new ServerSocket(server.port);
+            System.out.println("Server started");
+            System.out.println("Waiting " + clients + " clients...");
             sendServer s = new sendServer();
             s.start();
 
             for (int i = 0; i < clients; i++) {
                 client = serverSocket.accept();
-                m.th.add(new thread(client, m));
-                m.th.get(i).nThread = i;
-                System.out.println("acepto el cliente " + i);
+                server.th.add(new thread(client, server));
+                server.th.get(i).nThread = i;
+                System.out.println("Accept the client " + i);
             }
             s.stop();
 
-            System.out.println("termino");
-            m.End.setText("Limit Number");
-            m.End.setBounds(15, 140, 380, 40);
-            m.textfield.setVisible(true);
-            m.calculate.setVisible(true);
+            System.out.println("finished");
+            server.infoClients.setText("Limit Number");
+            server.infoClients.setBounds(15, 140, 380, 40);
+            server.inputNumber.setVisible(true);
+            server.calculate.setVisible(true);
             for (int i = 0; i < clients; i++) {
-                m.th.get(i).start();
+                server.th.get(i).start();
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
