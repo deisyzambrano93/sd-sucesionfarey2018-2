@@ -220,16 +220,16 @@ public class Client {
         resultClient = result;
 
         switch (number) {
-            case 1:
+            case 0:
                 agregateFractionInitial();
                 break;
-            case 2:
+            case 1:
                 calculateCombination(finish);
                 break;
-            case 3:
+            case 2:
                 agregateFractionFinal();
                 break;
-            case 4:
+            case 3:
                 orderByFractions();
                 break;
         }
@@ -277,5 +277,6 @@ public class Client {
                 }
             }
         }
+        resultClient += "Final: " + results.toString();
     }
 }

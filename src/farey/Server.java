@@ -203,40 +203,44 @@ public class Server extends Frame {
                     inputNumber.setVisible(false);
                     calculate.setVisible(false);
 
-                    System.out.println("Server does the task " + 1);
-                    tasks(1, value, 0);
-
                     int numberNodes = quantity + 1;
                     int numberTasks = 4;
-                    int clientCurrent = 1;
+                    int clientCurrent = 0;
 
-                    for (int i = 2; i <= numberTasks; i++) {
+                    for (int i = 0; i < numberTasks; i++) {
                         try {
-                            System.out.println("Client " + clientCurrent + " does the task " + i);
-                            tasks(i, value, clientCurrent);
-                            if (th.get(clientCurrent) == null) {
-                                System.out.println("Thread not found");
+                            if (i == 0) {
+                                System.out.println("Server does the task " + i);
+                                tasks(i, value, clientCurrent);
+                            } else {
+                                System.out.println("Client " + clientCurrent + " does the task " + i);
+                                tasks(i, value, clientCurrent);
+                                if (th.get(clientCurrent) == null) {
+                                    System.out.println("Thread not found");
+                                }
+                                th.get(clientCurrent).output.writeUTF(result + ";" + i + ";" + value);
+                                String aux = "";
+                                while ("".equals(aux)) {
+                                    aux = th.get(clientCurrent).input.readUTF();
+                                    String[] data;
+                                    data = aux.split(";");
+                                    System.out.println("Client " + clientCurrent + " response");
+                                    resultFinal = data[0];
+                                }
+
                             }
-                            th.get(clientCurrent).output.writeUTF(result + ";" + i + ";" + value);//
-                            String aux = "";
-                            while ("".equals(aux)) {
-                                aux = th.get(clientCurrent).input.readUTF();
-                                String[] data;
-                                data = aux.split(";");
-                                System.out.println("Client " + clientCurrent + " response");
-                                resultFinal = data[0];
+
+                            clientCurrent++;
+
+                            if (clientCurrent == numberNodes) {
+                                clientCurrent = 0;
                             }
+
                         } catch (IOException ex) {
                             System.out.println("Client " + i + " does not respond");
                             JOptionPane.showMessageDialog(null, "Client " + i + " does not respond, the server will do the calculation");
                             tasks(i, value, 0);
                             assignmentArea.setText(resultE);
-                        }
-
-                        clientCurrent++;
-
-                        if (clientCurrent == numberNodes) {
-                            clientCurrent = 0;
                         }
                     }
                 }
@@ -269,16 +273,16 @@ public class Server extends Frame {
         }
 
         switch (number) {
-            case 1:
+            case 0:
                 agregateFractionInitial();
                 break;
-            case 2:
+            case 1:
                 calculateCombination(finish);
                 break;
-            case 3:
+            case 2:
                 agregateFractionFinal();
                 break;
-            case 4:
+            case 3:
                 orderByFractions();
                 break;
         }
@@ -328,6 +332,7 @@ public class Server extends Frame {
                 }
             }
         }
+        result += "Final:" + results.toString();
     }
 
 }
