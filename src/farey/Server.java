@@ -106,15 +106,15 @@ class thread extends Thread {
 
 public class Server extends Frame {
 
-    JTextField inputNumber, textfieldC;
-    JTextArea assignmentArea, resultArea, ClientD, infoClients, assignmentTitle, resultTitle;
-    JComboBox combobox;
+    JTextField inputNumber;
+    JTextArea assignmentArea, resultArea, infoClients, assignmentTitle, resultTitle;
     JLabel calculate, exit, start;
     JScrollPane assignmentScroll, resultScroll;
-    String result = "", print = "", resultFinal = "", printFinal = "", resultE = "", printE = "";
+    String result = "", resultFinal = "", resultE = "", printE = "";
     static int port = 4000;
     int quantity;
     ArrayList<thread> th = new ArrayList<>();
+    ArrayList<Farey> results = new ArrayList<>();
 
     public Server() {
         this.setLayout(null);
@@ -203,72 +203,45 @@ public class Server extends Frame {
                     inputNumber.setVisible(false);
                     calculate.setVisible(false);
 
-                    ArrayList<Integer> results = new ArrayList<>();
+                    System.out.println("Server does the task " + 1);
+                    tasks(1, value, 0);
 
-                    int calc = quantity + 1;
-                    int porc = value / calc;
-                    System.out.println(porc);
-                    if (value % calc != 0) {
-                        System.out.println("excess " + value % calc);
-                        results.add(value % calc + porc);
-                        for (int i = 1; i < quantity + 1; i++) {
-                            results.add(results.get(i - 1) + porc);
-                        }
-                    } else {
-                        results.add(porc);
-                        for (int i = 1; i < quantity + 1; i++) {
-                            results.add(results.get(i - 1) + porc);
-                        }
-                    }
-                    porc = porc / 2;
-                    //50
-                    //25
-                    //1-50 +25
-                    //51-100
-                    for (int i = quantity - 1; i >= 0; i--) {
-                        results.set(i, results.get(i) + porc);
-                        System.out.println("Results " + i + ": " + results.get(i));
-                    }
+                    int numberNodes = quantity + 1;
+                    int numberTasks = 4;
+                    int clientCurrent = 1;
 
-                    /*
-                //para mirar los puntos de partida de cada parte
-                for (int i = 0; i < cant+1; i++) {
-                    System.out.println(valores.get(i));
-                    
-                }
-                     */
-                    calculate(1, results.get(0), 0);
-                    System.out.println("Server start in 1 and finish in " + results.get(0));
-                    assignmentArea.setText(printE);
-                    resultFinal = result;
-                    printFinal = print;
-
-                    for (int i = 1; i < quantity + 1; i++) {
-                        //calcular(valores.get(i-1)+1,valores.get(i),RFinal);
+                    for (int i = 2; i <= numberTasks; i++) {
                         try {
-                            System.out.println("Client " + i + " , start in  " + (results.get(i - 1) + 1) + " and finish in " + results.get(i));
-                            if (th.get(i - 1) == null) {
+                            System.out.println("Client " + clientCurrent + " does the task " + i);
+                            tasks(i, value, clientCurrent);
+                            if (th.get(clientCurrent) == null) {
                                 System.out.println("Thread not found");
                             }
-                            th.get(i - 1).output.writeUTF((results.get(i - 1) + 1) + ";" + results.get(i) + ";" + resultFinal + ";" + printFinal);
+                            th.get(clientCurrent).output.writeUTF(result + ";" + i + ";" + value);//
                             String aux = "";
                             while ("".equals(aux)) {
-                                aux = th.get(i - 1).input.readUTF();
+                                aux = th.get(clientCurrent).input.readUTF();
                                 String[] data;
                                 data = aux.split(";");
-                                System.out.println("Responded the client " + i);
+                                System.out.println("Client " + clientCurrent + " response");
                                 resultFinal = data[0];
-                                printFinal = data[1];
                             }
                         } catch (IOException ex) {
                             System.out.println("Client " + i + " does not respond");
                             JOptionPane.showMessageDialog(null, "Client " + i + " does not respond, the server will do the calculation");
-                            calculate(results.get(i - 1) + 1, results.get(i), i);
+                            tasks(i, value, 0);
                             assignmentArea.setText(resultE);
                         }
+
+                        clientCurrent++;
+
+                        if (clientCurrent == numberNodes) {
+                            clientCurrent = 0;
+                        }
                     }
-                    resultArea.setText(printFinal);
                 }
+
+                System.out.println(results.toString());
             }
         });
 
@@ -286,29 +259,77 @@ public class Server extends Frame {
         });
     }
 
-    void calculate(int start, int end, int c) {
+    public void tasks(int number, int finish, int clientId) {
         result = resultFinal;
-        print = printFinal;
-        if (c == 0) {
+
+        if (clientId == 0) {
             printE += "";
         } else {
-            printE += "Calculate of the client " + c + "\n";
+            printE += "Calculate of the client " + clientId + "\n";
         }
-        for (int i = start; i <= end; i++) {
-            if (!result.contains("" + i)) {
-                result += i;
-                if (i % 10 == 0) {
-                    print += i + "\n";
-                    printE += i + "\n";
-                } else {
-                    print += i + "-";
-                    printE += i + "-";
+
+        switch (number) {
+            case 1:
+                agregateFractionInitial();
+                break;
+            case 2:
+                calculateCombination(finish);
+                break;
+            case 3:
+                agregateFractionFinal();
+                break;
+            case 4:
+                orderByFractions();
+                break;
+        }
+
+        resultFinal = result;
+    }
+
+    public void agregateFractionInitial() {
+        Farey fStart = new Farey(0, 1);
+        results.add(fStart);
+        result += 0 + "/" + 1 + ",";
+    }
+
+    public void calculateCombination(int finish) {
+        for (int i = 1; i <= finish; i++) {
+            for (int j = 1; j <= finish; j++) {
+                if (i < j) {
+                    Farey f = new Farey(i, j);
+                    boolean flag = false;
+                    for (int k = 0; k < results.size() - 1; k++) {
+                        if (results.get(k).getValue() == f.getValue()) {
+                            flag = true;
+                        }
+                    }
+                    if (!flag) {
+                        results.add(f);
+                        result += f.getNum() + "/" + f.getDen() + ",";
+                    }
                 }
             }
         }
-        resultFinal = result;
-        printFinal = print;
     }
+
+    public void agregateFractionFinal() {
+        Farey fFinish = new Farey(1, 1);
+        results.add(fFinish);
+        result += 1 + "/" + 1;
+    }
+
+    public void orderByFractions() {
+        for (int i = 0; i < results.size() - 1; i++) {
+            for (int j = i + 1; j < results.size() - 1; j++) {
+                if (((double) results.get(i).getNum() / (double) results.get(i).getDen()) > ((double) results.get(j).getNum() / (double) results.get(j).getDen())) {
+                    Farey tmp = results.get(j);
+                    results.set(j, results.get(i));
+                    results.set(i, tmp);
+                }
+            }
+        }
+    }
+
 }
 
 class serverSocket implements Runnable {

@@ -185,23 +185,7 @@ public class Client {
     final DataInputStream input = null;
     final DataOutputStream output = null;
     String resultClient = "", printClient = "", printG = "";
-
-    void calculate(int start, int end, String result, String print) {
-        resultClient = result;
-        printClient += print;
-        for (int i = start; i <= end; i++) {
-            if (!resultClient.contains("" + i)) {
-                resultClient += i;
-                if (i % 10 == 0) {
-                    printClient += i + "\n";
-                    printG += i + "\n";
-                } else {
-                    printClient += i + "-";
-                    printG += i + "-";
-                }
-            }
-        }
-    }
+    ArrayList<Farey> results = new ArrayList<>();
 
     public Client(String ip) {
         Socket client;
@@ -216,19 +200,82 @@ public class Client {
                 aux = input.readUTF();
                 String[] data;
                 data = aux.split(";");
-                if (data.length == 4) {
-                    System.out.println("arrive-> Start: " + data[0] + " End: " + data[1]);
-                    calculate(Integer.parseInt(data[0]), Integer.parseInt(data[1]), data[2], data[3]);
-                    win.result.setText(printG);
-                    output.writeUTF(resultClient + ";" + printClient);
+                if (data.length == 3) {
+                    System.out.println("Receive-> Result: " + data[0] + " Task: " + data[1] + " Value: " + data[2]);
+                    tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);
+                    win.result.setText(resultClient);
+                    output.writeUTF(resultClient);
                 } else {
-                    System.out.println("arrive: " + aux + " size: " + data.length);
+                    System.out.println("Receive: " + aux + " Size: " + data.length);
                 }
 
             }
         } catch (IOException | NumberFormatException e) {
             System.err.println("Connection error client: " + e);
             System.exit(-1);
+        }
+    }
+
+    public void tasks(int number, int finish, int clientId, String result) {
+        resultClient = result;
+
+        switch (number) {
+            case 1:
+                agregateFractionInitial();
+                break;
+            case 2:
+                calculateCombination(finish);
+                break;
+            case 3:
+                agregateFractionFinal();
+                break;
+            case 4:
+                orderByFractions();
+                break;
+        }
+    }
+
+    public void agregateFractionInitial() {
+        Farey fStart = new Farey(0, 1);
+        results.add(fStart);
+        resultClient += 0 + "/" + 1 + ",";
+    }
+
+    public void calculateCombination(int finish) {
+        for (int i = 1; i <= finish; i++) {
+            for (int j = 1; j <= finish; j++) {
+                if (i < j) {
+                    Farey f = new Farey(i, j);
+                    boolean flag = false;
+                    for (int k = 0; k < results.size() - 1; k++) {
+                        if (results.get(k).getValue() == f.getValue()) {
+                            flag = true;
+                        }
+                    }
+                    if (!flag) {
+                        results.add(f);
+                        resultClient += f.getNum() + "/" + f.getDen() + ",";
+                    }
+                }
+            }
+        }
+    }
+
+    public void agregateFractionFinal() {
+        Farey fFinish = new Farey(1, 1);
+        results.add(fFinish);
+        resultClient += 1 + "/" + 1;
+    }
+
+    public void orderByFractions() {
+        for (int i = 0; i < results.size() - 1; i++) {
+            for (int j = i + 1; j < results.size() - 1; j++) {
+                if (((double) results.get(i).getNum() / (double) results.get(i).getDen()) > ((double) results.get(j).getNum() / (double) results.get(j).getDen())) {
+                    Farey tmp = results.get(j);
+                    results.set(j, results.get(i));
+                    results.set(i, tmp);
+                }
+            }
         }
     }
 }
