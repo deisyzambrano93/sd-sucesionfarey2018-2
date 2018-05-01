@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -192,7 +191,7 @@ public class Server extends Frame {
             @Override
             public void mousePressed(MouseEvent evt) {
 
-                if ((inputNumber.getText() != null) && (Integer.parseInt(inputNumber.getText()) > 0)) {
+                if ((inputNumber.getText() != null && !"".equals(inputNumber.getText())) && (Integer.parseInt(inputNumber.getText()) > 0)) {
                     Integer value = Integer.parseInt(inputNumber.getText());
 
                     assignmentTitle.setVisible(true);
@@ -209,12 +208,9 @@ public class Server extends Frame {
 
                     for (int i = 0; i < numberTasks; i++) {
                         try {
-                            if (i == 0) {
-                                System.out.println("Server does the task " + i);
-                                tasks(i, value, clientCurrent);
-                            } else {
-                                System.out.println("Client " + clientCurrent + " does the task " + i);
-                                tasks(i, value, clientCurrent);
+                            System.out.println("Client " + clientCurrent + " does the task " + i);
+                            tasks(i, value, clientCurrent);
+                            if (clientCurrent != 1) {
                                 if (th.get(clientCurrent) == null) {
                                     System.out.println("Thread not found");
                                 }
@@ -227,7 +223,6 @@ public class Server extends Frame {
                                     System.out.println("Client " + clientCurrent + " response");
                                     resultFinal = data[0];
                                 }
-
                             }
 
                             clientCurrent++;
@@ -243,9 +238,9 @@ public class Server extends Frame {
                             assignmentArea.setText(resultE);
                         }
                     }
+                    resultArea.setText(results.toString());
+                    System.out.println(results.toString());
                 }
-
-                System.out.println(results.toString());
             }
         });
 
@@ -286,6 +281,8 @@ public class Server extends Frame {
                 orderByFractions();
                 break;
         }
+        
+        assignmentArea.setText(assignmentArea.getText() + "Task" + number + ": " + result + "\n");
 
         resultFinal = result;
     }
@@ -332,7 +329,7 @@ public class Server extends Frame {
                 }
             }
         }
-        result += "Final:" + results.toString();
+        resultFinal = results.toString();
     }
 
 }
