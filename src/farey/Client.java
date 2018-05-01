@@ -206,7 +206,11 @@ public class Client {
                         tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);
                     }
                     
-                    win.result.setText(resultClient);
+                    if (win.result.getText().equalsIgnoreCase("Waiting for assignment...")) {
+                        win.result.setText("");
+                    }
+                    
+                    win.result.setText(win.result.getText() + "\n" + "Task" + data[1] + ": " + resultClient);
                     output.writeUTF(resultClient);
                 } else {
                     System.out.println("Receive: " + aux + " Size: " + data.length);
@@ -271,6 +275,8 @@ public class Client {
     }
 
     public void orderByFractions() {
+        results.add(new Farey(0,1));
+        results.add(new Farey(1,1));
         for (int i = 0; i < results.size() - 1; i++) {
             for (int j = i + 1; j < results.size() - 1; j++) {
                 if (((double) results.get(i).getNum() / (double) results.get(i).getDen()) > ((double) results.get(j).getNum() / (double) results.get(j).getDen())) {
@@ -280,6 +286,6 @@ public class Client {
                 }
             }
         }
-        resultClient += "Final: " + results.toString();
+        resultClient = results.toString();
     }
 }
