@@ -202,7 +202,10 @@ public class Client {
                 data = aux.split(";");
                 if (data.length == 3) {
                     System.out.println("Receive-> Result: " + data[0] + " Task: " + data[1] + " Value: " + data[2]);
-                    tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);
+                    if(Integer.parseInt(data[1]) == 0){
+                        tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);
+                    }
+                    
                     win.result.setText(resultClient);
                     output.writeUTF(resultClient);
                 } else {
