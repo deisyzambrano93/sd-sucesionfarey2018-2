@@ -202,14 +202,14 @@ public class Client {
                 data = aux.split(";");
                 if (data.length == 4) {
                     System.out.println("Receive-> Result: " + data[0] + " Task: " + data[1] + " Value: " + data[2] + " ClientCurrent: " + data[3]);
-                    if(Integer.parseInt(data[3]) == 0){
+                    if (Integer.parseInt(data[3]) == 0) {
                         tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);
                     }
-                    
+
                     if (win.result.getText().equalsIgnoreCase("Waiting for assignment...")) {
                         win.result.setText("");
                     }
-                    
+
                     win.result.setText(win.result.getText() + "Task" + data[1] + ": " + resultClient + "\n");
                     output.writeUTF(resultClient);
                 } else {
@@ -275,8 +275,8 @@ public class Client {
     }
 
     public void orderByFractions() {
-        results.add(new Farey(0,1));
-        results.add(new Farey(1,1));
+        results.add(new Farey(0, 1));
+        results.add(new Farey(1, 1));
         for (int i = 0; i < results.size() - 1; i++) {
             for (int j = i + 1; j < results.size() - 1; j++) {
                 if (((double) results.get(i).getNum() / (double) results.get(i).getDen()) > ((double) results.get(j).getNum() / (double) results.get(j).getDen())) {

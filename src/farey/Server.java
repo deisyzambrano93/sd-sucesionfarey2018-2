@@ -240,8 +240,8 @@ public class Server extends Frame {
                             assignmentArea.setText(resultE);
                         }
                     }
-                    resultArea.setText(results.toString());
-                    System.out.println(results.toString());
+                    resultArea.setText(resultFinal);
+                    System.out.println(resultFinal);
                 }
             }
         });
@@ -316,8 +316,8 @@ public class Server extends Frame {
     }
 
     public void orderByFractions() {
-        results.add(new Farey(0,1));
-        results.add(new Farey(1,1));
+        results.add(new Farey(0, 1));
+        results.add(new Farey(1, 1));
         for (int i = 0; i < results.size() - 1; i++) {
             for (int j = i + 1; j < results.size() - 1; j++) {
                 if (((double) results.get(i).getNum() / (double) results.get(i).getDen()) > ((double) results.get(j).getNum() / (double) results.get(j).getDen())) {
