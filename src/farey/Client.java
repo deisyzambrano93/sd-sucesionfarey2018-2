@@ -210,7 +210,7 @@ public class Client {
                         win.result.setText("");
                     }
                     
-                    win.result.setText(win.result.getText() + "\n" + "Task" + data[1] + ": " + resultClient);
+                    win.result.setText(win.result.getText() + "Task" + data[1] + ": " + resultClient + "\n");
                     output.writeUTF(resultClient);
                 } else {
                     System.out.println("Receive: " + aux + " Size: " + data.length);
