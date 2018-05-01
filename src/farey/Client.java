@@ -200,7 +200,7 @@ public class Client {
                 aux = input.readUTF();
                 String[] data;
                 data = aux.split(";");
-                if (data.length == 3) {
+                if (data.length == 4) {
                     System.out.println("Receive-> Result: " + data[0] + " Task: " + data[1] + " Value: " + data[2] + " ClientCurrent: " + data[3]);
                     if(Integer.parseInt(data[3]) == 0){
                         tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);

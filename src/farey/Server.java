@@ -205,16 +205,14 @@ public class Server extends Frame {
                     int numberNodes = quantity + 1;
                     int numberTasks = 4;
                     int clientCurrent = 0;
-                    int id = numberNodes;
+                    int id = numberNodes - 1;
 
                     for (int i = 0; i < numberTasks; i++) {
                         try {
                             System.out.println("Client " + clientCurrent + " does the task " + i);
                             if (clientCurrent == id) {
                                 tasks(i, value, clientCurrent);
-                            }
-                            
-                            if (clientCurrent != id) {
+                            } else {
                                 if (th.get(clientCurrent) == null) {
                                     System.out.println("Thread not found");
                                 }
@@ -279,7 +277,7 @@ public class Server extends Frame {
                 orderByFractions();
                 break;
         }
-        
+
         assignmentArea.setText(assignmentArea.getText() + "Task" + number + ": " + result + "\n");
 
         resultFinal = result;
