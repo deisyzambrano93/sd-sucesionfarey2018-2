@@ -218,7 +218,7 @@ public class Server extends Frame {
                                 if (th.get(clientCurrent) == null) {
                                     System.out.println("Thread not found");
                                 }
-                                th.get(clientCurrent).output.writeUTF(result + ";" + i + ";" + value);
+                                th.get(clientCurrent).output.writeUTF(result + ";" + i + ";" + value + ";" + clientCurrent);
                                 String aux = "";
                                 while ("".equals(aux)) {
                                     aux = th.get(clientCurrent).input.readUTF();

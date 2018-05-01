@@ -201,8 +201,8 @@ public class Client {
                 String[] data;
                 data = aux.split(";");
                 if (data.length == 3) {
-                    System.out.println("Receive-> Result: " + data[0] + " Task: " + data[1] + " Value: " + data[2]);
-                    if(Integer.parseInt(data[1]) == 0){
+                    System.out.println("Receive-> Result: " + data[0] + " Task: " + data[1] + " Value: " + data[2] + " ClientCurrent: " + data[3]);
+                    if(Integer.parseInt(data[3]) == 0){
                         tasks(Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, data[0]);
                     }
                     
